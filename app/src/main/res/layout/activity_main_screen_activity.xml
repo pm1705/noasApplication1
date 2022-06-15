@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.noasApp.main_screen_activity">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="10" />
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="90"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="wrap_content"
+            android:layout_height="0px"
+            android:layout_weight="5"
+            android:onClick="log_out"
+            android:text="LOG OUT" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="10" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:text="HOME" />
+
+        <TextView
+            android:id="@+id/userinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:onClick="personal_page"
+            android:text="personal page" />
+
+        <Button
+            android:id="@+id/button13"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:onClick="vitamin_table_button"
+            android:text="vitamin table" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:onClick="new_recipe"
+            android:text="new recipe" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:onClick="browse_recipes"
+            android:text="browes recipes" />
+
+        <Button
+            android:id="@+id/button12"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:onClick="new_restaurant"
+            android:text="new restaurant" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="10" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="10" />
+</LinearLayout>

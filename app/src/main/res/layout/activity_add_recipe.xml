@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.noasApp.AddRecipe">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5" />
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="90"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="5" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:text="הוסף מתכון" />
+
+        <EditText
+            android:id="@+id/name_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/description_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Description *optional"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/calories_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Calories"
+            android:inputType="numberDecimal" />
+
+        <Switch
+            android:id="@+id/kosher_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kosher" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="For the following fields Enter for each new item." />
+
+        <EditText
+            android:id="@+id/ingredients_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="ingredients"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/instructions_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="instructions"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/topping_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="toppings"
+            android:inputType="textMultiLine" />
+
+        <TextView
+            android:id="@+id/errors_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="submit_recipe"
+            android:text="Submit Recipe" />
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="40" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5" />
+</LinearLayout>

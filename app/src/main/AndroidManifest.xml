@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.noasApplication">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.NoasApplication">
+        <activity android:name="com.example.noasApplication.browse_recipes" />
+        <activity android:name="com.example.noasApplication.personal_page" />
+        <activity android:name="com.example.noasApplication.register_activity" />
+        <activity android:name="com.example.noasApplication.main_screen_activity" />
+        <activity android:name="com.example.noasApplication.VitaminTable" />
+        <activity android:name="com.example.noasApplication.RecipePage" />
+        <activity android:name="com.example.noasApplication.login_activity" />
+        <activity android:name="com.example.noasApplication.AddRecipe" />
+        <activity android:name="com.example.noasApplication.AddRestaruant" />
+        <activity android:name="com.example.noasApplication.temp_screen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

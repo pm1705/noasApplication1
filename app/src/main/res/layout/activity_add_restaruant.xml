@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.noasApp.AddRestaruant">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5" />
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="90"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="5" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:text="הוסף מסעדה" />
+
+        <EditText
+            android:id="@+id/res_name_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/res_link_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Link"
+            android:inputType="textPersonName" />
+
+        <Switch
+            android:id="@+id/res_kosher_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kosher" />
+
+        <TextView
+            android:id="@+id/res_errors_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="For the following field Enter for each new item." />
+
+        <EditText
+            android:id="@+id/res_location_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Locations"
+            android:inputType="textMultiLine" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Product"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/pro_name_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/pro_description_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/pro_calories_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Calories"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:id="@+id/pro_errors_add_res"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="10"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="add_pro_add_res"
+                android:text="Add Product" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4" />
+
+            <Button
+                android:id="@+id/button10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="submit"
+                android:text="Submit" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="40" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5" />
+</LinearLayout>

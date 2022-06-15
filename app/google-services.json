@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "918689678453",
+    "firebase_url": "https://myfinalproj-6e9bf-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "myfinalproj-6e9bf",
+    "storage_bucket": "myfinalproj-6e9bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918689678453:android:32d03687d73ea62e3c243c",
+        "android_client_info": {
+          "package_name": "com.example.noasapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918689678453-omu2fl1tnpu2nj425o1q7l6i9amomar3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7rGSdvNA-miHS04XwfVW3TlWOEJQsJTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918689678453-omu2fl1tnpu2nj425o1q7l6i9amomar3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
