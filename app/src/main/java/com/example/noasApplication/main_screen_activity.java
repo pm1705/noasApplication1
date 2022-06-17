@@ -2,18 +2,23 @@ package com.example.noasApplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -30,6 +35,8 @@ public class main_screen_activity extends AppCompatActivity {
     TextView info_display;
     public static com.example.noasApplication.User current_user;
 
+    ImageView pfpview;
+    Uri curImage;
 
 
     SharedPreferences.Editor editor; // זיכרון פנימי
@@ -47,6 +54,7 @@ public class main_screen_activity extends AppCompatActivity {
 
         info_display = (TextView) findViewById(R.id.userinfo);
 
+        pfpview = (ImageView) findViewById(R.id.pfpview);
 
 
         FBRefs.refUsers.addListenerForSingleValueEvent(new ValueEventListener() { // מוציא מידע
@@ -70,7 +78,22 @@ public class main_screen_activity extends AppCompatActivity {
                                 logged_user_id,
                                 (data.child("favorites").getValue() + "").toString(),
                                 (data.child("recipes").getValue() + "").toString());
-                        info_display.setText("Logged in as: " + current_user.getName());
+
+                        FBRefs.storageRef.child(current_user.getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                curImage = uri;
+                                System.out.println(curImage.toString());
+                                Picasso.get().load(curImage.toString()).into(pfpview);
+                                info_display.setText("Logged in as: " + current_user.getName());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                                info_display.setText("Logged in as: " + current_user.getName());
+                            }
+                        });
                     }
                 }
 

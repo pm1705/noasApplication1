@@ -3,9 +3,9 @@ package com.example.noasApplication;
 public class User {
     String name, email, password, location;
     int weight, height, age, activity_level, gender, id;
-    String  recipes, favorites;
+    //String  recipes, favorites;
 
-    public User(String name, String email, String password, String location, int gender, int weight, int height, int age, int activity_level, int id, String recipes, String favorites) {
+    public User(String name, String email, String password, String location, int gender, int weight, int height, int age, int activity_level, int id) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -16,8 +16,8 @@ public class User {
         this.age = age;
         this.activity_level = activity_level;
         this.location = location;
-        this.recipes = recipes;
-        this.favorites = favorites;
+        //this.recipes = recipes;
+        //this.favorites = favorites;
     }
 
     public String getName() {
@@ -80,21 +80,21 @@ public class User {
         return activity_level;
     }
 
-    public String getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(String recipes) {
-        this.recipes = recipes;
-    }
-
-    public String getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(String favorites) {
-        this.favorites = favorites;
-    }
+    //public String getRecipes() {
+    //    return recipes;
+    //}
+//
+    //public void setRecipes(String recipes) {
+    //    this.recipes = recipes;
+    //}
+//
+    //public String getFavorites() {
+    //    return favorites;
+    //}
+//
+    //public void setFavorites(String favorites) {
+    //    this.favorites = favorites;
+    //}
 
     public void setActivity_level(int activity_level) {
         this.activity_level = activity_level;

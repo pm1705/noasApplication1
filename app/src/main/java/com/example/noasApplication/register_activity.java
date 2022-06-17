@@ -2,11 +2,13 @@ package com.example.noasApplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -36,6 +38,9 @@ public class register_activity extends AppCompatActivity implements AdapterView.
 
     SharedPreferences.Editor editor; // זיכרון פנימי
 
+    ImageView pfpimg;
+    Uri selectedImageUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +62,8 @@ public class register_activity extends AppCompatActivity implements AdapterView.
         activity_level = (Spinner)findViewById(R.id.activity_level_register);
         location = (EditText)findViewById(R.id.location_register);
         errors = (TextView)findViewById(R.id.error);
+
+        pfpimg = (ImageView) findViewById(R.id.pfpimg);
 
         gender.setOnItemSelectedListener(this);
         int_gender = -1;
@@ -164,18 +171,22 @@ public class register_activity extends AppCompatActivity implements AdapterView.
 
             next_id = usersEmails.size(); // 0, 1, 2...
 
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).setValue("");
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("username").setValue(str_uname);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("email").setValue(str_email);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("pass").setValue(str_pass);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("age").setValue(str_age);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("weight").setValue(str_weight);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("height").setValue(str_height);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("gender").setValue(int_gender);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("activityLevel").setValue(int_activity_level);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("location").setValue(str_location);
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("recipes").setValue("");
-            com.example.noasApplication.FBRefs.refUsers.child(Integer.toString(next_id)).child("favorites").setValue("");
+            FBRefs.refUsers.child(Integer.toString(next_id)).setValue("");
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("username").setValue(str_uname);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("email").setValue(str_email);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("pass").setValue(str_pass);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("age").setValue(str_age);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("weight").setValue(str_weight);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("height").setValue(str_height);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("gender").setValue(int_gender);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("activityLevel").setValue(int_activity_level);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("location").setValue(str_location);
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("recipes").setValue("");
+            FBRefs.refUsers.child(Integer.toString(next_id)).child("favorites").setValue("");
+
+            if (null != selectedImageUri) {
+                FBRefs.storageRef.child(str_email).putFile(selectedImageUri);
+            }
 
             editor.putBoolean("logged_in",true); // זיכרון פנימי
             editor.putInt("key_id",next_id);
@@ -202,5 +213,35 @@ public class register_activity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    public void upload_img(View view) {
+        // create an instance of the
+        // intent of the type image
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        // pass the constant to compare it
+        // with the returned requestCode
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), 200);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            // compare the resultCode with the
+            // SELECT_PICTURE constant
+            if (requestCode == 200) {
+                // Get the url of the image from data
+                selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    // update the preview image in the layout
+                    pfpimg.setImageURI(selectedImageUri);
+                }
+            }
+        }
     }
 }

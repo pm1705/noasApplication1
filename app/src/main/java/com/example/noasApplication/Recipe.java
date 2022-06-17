@@ -11,14 +11,16 @@ public class Recipe extends Product {
     private ArrayList<String> ingredients;
     private ArrayList<String> toppings;
     private String key;
+    private int meal_time;
 
     public Recipe(String name, String description, double cal, boolean kosher,
                   ArrayList<String> instructions, ArrayList<String> ingredients,
-                  ArrayList<String> toppings, String key) {
+                  ArrayList<String> toppings, String key, int meal_time) {
         super(name, description, cal, kosher, key);
         this.instructions = instructions;
         this.ingredients = ingredients;
         this.toppings = toppings;
+        this.meal_time = meal_time;
     }
 
     public ArrayList<String> getInstructions() {
