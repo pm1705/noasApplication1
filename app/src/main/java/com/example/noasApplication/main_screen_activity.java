@@ -75,9 +75,7 @@ public class main_screen_activity extends AppCompatActivity {
                                 Integer.valueOf(data.child("height").getValue().toString()),
                                 Integer.valueOf(data.child("age").getValue().toString()),
                                 Integer.valueOf(data.child("activityLevel").getValue().toString()),
-                                logged_user_id,
-                                (data.child("favorites").getValue() + "").toString(),
-                                (data.child("recipes").getValue() + "").toString());
+                                logged_user_id);
 
                         FBRefs.storageRef.child(current_user.getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
