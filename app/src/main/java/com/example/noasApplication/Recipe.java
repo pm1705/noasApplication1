@@ -47,4 +47,12 @@ public class Recipe extends Product {
         this.toppings = toppings;
     }
 
+    public int getMeal_time() {
+        return meal_time;
+    }
+
+    public void setMeal_time(int meal_time) {
+        this.meal_time = meal_time;
+    }
+
 }

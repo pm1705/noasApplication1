@@ -2,7 +2,10 @@ package com.example.noasApplication;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -17,12 +20,15 @@ import java.util.ArrayList;
 
 import static com.example.noasApplication.main_screen_activity.current_user;
 
-public class AddRecipe extends AppCompatActivity {
+public class AddRecipe extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     EditText name, description, cal, ingredients, instructions, topping;
     Switch kosher;
     String str_name, str_description, str_cal, str_ingredients, str_instructions, str_topping;
     TextView errors;
+    Spinner time_pick;
+    String[] time_lst = {"all", "breakfast", "lunch", "dinner"};
+    int time_int;
 
     ArrayList Recipes;
 
@@ -40,7 +46,16 @@ public class AddRecipe extends AppCompatActivity {
         instructions = (EditText)findViewById(R.id.instructions_recipe);
         topping = (EditText)findViewById(R.id.topping_recipe);
         kosher = (Switch)findViewById(R.id.kosher_recipe);
-        errors = (TextView)findViewById(R.id.errors_recipe) ;
+        errors = (TextView)findViewById(R.id.errors_recipe);
+        time_pick = (Spinner) findViewById(R.id.time_pick);
+
+        time_pick.setOnItemSelectedListener(this);
+        time_int = 0;
+        ArrayAdapter<String> gender_adp = new ArrayAdapter<String>(this,
+                R.layout.support_simple_spinner_dropdown_item,time_lst);
+        time_pick.setAdapter(gender_adp);
+
+
 
         Recipes = new ArrayList();
 
@@ -121,8 +136,19 @@ public class AddRecipe extends AppCompatActivity {
             com.example.noasApplication.FBRefs.refRecipes.child(key).child("instructions").setValue(str_instructions);
             com.example.noasApplication.FBRefs.refRecipes.child(key).child("topping").setValue(str_topping);
             com.example.noasApplication.FBRefs.refRecipes.child(key).child("kosher").setValue(kosher.isChecked());
-            com.example.noasApplication.FBRefs.refUsers.child(String.valueOf(current_user.getId())).child("recipes").child(key).setValue(" ");
+            //com.example.noasApplication.FBRefs.refUsers.child(String.valueOf(current_user.getId())).child("recipes").child(key).setValue(" ");
+            com.example.noasApplication.FBRefs.refRecipes.child(key).child("time").setValue(time_int);
             finish();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        time_int = i;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
