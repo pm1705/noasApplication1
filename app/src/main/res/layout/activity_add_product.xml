@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddProduct">
+
+    <Space
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:text="Add Product"
+            android:textSize="26" />
+
+        <EditText
+            android:id="@+id/name_add_product"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="For the following fields fill for 100 grams"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/cal_add_product"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="Calories"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/car_add_product"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="Carbohydrates"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/fats_add_product"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="Fats"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/prot_add_product"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="Proteins"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button16"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:onClick="submit"
+            android:text="Add" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+</LinearLayout>

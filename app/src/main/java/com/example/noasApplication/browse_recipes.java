@@ -37,7 +37,7 @@ public class browse_recipes extends AppCompatActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_recipes);
 
-        search_input = (EditText) findViewById(R.id.search_input);
+        search_input = (EditText) findViewById(R.id.search_choose_product);
         results = (ListView) findViewById(R.id.results);
 
         results.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

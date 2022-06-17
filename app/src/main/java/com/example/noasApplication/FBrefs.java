@@ -14,4 +14,5 @@ class FBRefs {
     public static DatabaseReference refUsers = FBDB.getReference("Users");
     public static DatabaseReference refRecipes = FBDB.getReference("Recipes");
     public static DatabaseReference refRestaurants = FBDB.getReference("Restaurants");
+    public static DatabaseReference refProducts = FBDB.getReference("Products");
 }

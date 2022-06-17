@@ -1,0 +1,126 @@
+package com.example.noasApplication;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+public class AddProduct extends AppCompatActivity {
+
+    EditText name, cal, car, fats, prot;
+    TextView errors;
+    Intent choose_product;
+    String str_name, str_cal, str_car, str_fats, str_prot, error;
+
+    ArrayList products;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_product);
+
+        name = (EditText)findViewById(R.id.name_add_product);
+        cal = (EditText)findViewById(R.id.cal_add_product);
+        car = (EditText)findViewById(R.id.car_add_product);
+        fats = (EditText)findViewById(R.id.fats_add_product);
+        prot = (EditText)findViewById(R.id.prot_add_product);
+
+        choose_product = getIntent();
+
+        products = new ArrayList();
+
+        com.example.noasApplication.FBRefs.refProducts.addListenerForSingleValueEvent(new ValueEventListener() { // לקחת מתכונים
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dS) {
+                products.clear();
+                for(DataSnapshot data : dS.getChildren()) {
+                    products.add("" + data.getKey());
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+    private boolean valid_name(){
+        str_name = name.getText().toString();
+        if (str_name.length() > 0){
+            return true;
+        }
+        if (!products.contains(str_name)){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean valid_cal(){
+        str_cal = cal.getText().toString();
+        if (Integer.parseInt(str_cal) >= 0){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean valid_car(){
+        str_car = car.getText().toString();
+        if (Integer.parseInt(str_car) >= 0){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean valid_fats(){
+        str_fats = fats.getText().toString();
+        if (Integer.parseInt(str_fats) >= 0){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean valid_prot(){
+        str_prot = prot.getText().toString();
+        if (Integer.parseInt(str_prot) >= 0){
+            return true;
+        }
+        return false;
+    }
+
+    public void submit(View view) {
+        error = "";
+        if (!valid_name()) error += "Invalid name.\n";
+        if (!valid_cal()) error += "Invalid number of calories.\n";
+        if (!valid_car()) error += "Invalid number of carbohydrates.\n";
+        if (!valid_fats()) error += "Invalid number of fats.\n";
+        if (!valid_prot()) error += "Invalid number of proteins.\n";
+        errors.setText(error);
+        if (error == ""){
+            String key = String.valueOf(products.size());
+            // add product to fb
+            com.example.noasApplication.FBRefs.refRecipes.child(key).setValue("");
+            com.example.noasApplication.FBRefs.refRecipes.child(key).child("name").setValue(str_name);
+            com.example.noasApplication.FBRefs.refRecipes.child(key).child("cal").setValue(Integer.parseInt(str_cal));
+            com.example.noasApplication.FBRefs.refRecipes.child(key).child("car").setValue(Integer.parseInt(str_car));
+            com.example.noasApplication.FBRefs.refRecipes.child(key).child("fats").setValue(Integer.parseInt(str_fats));
+            com.example.noasApplication.FBRefs.refRecipes.child(key).child("prot").setValue(Integer.parseInt(str_prot));
+            // add product to recipe
+            choose_product.putExtra(key, 0);
+            setResult(RESULT_OK, choose_product);
+            // back
+            finish();
+        }
+
+    }
+}
