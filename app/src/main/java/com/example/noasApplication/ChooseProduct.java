@@ -23,7 +23,7 @@ public class ChooseProduct extends AppCompatActivity implements AdapterView.OnIt
     EditText name;
     ListView result;
     TextView search;
-    Intent product_page;
+    Intent product_page, ingredient_amount, recived_intent;
     String str_name;
 
     String search_text, current_id, current_name, current_description, recieved_option;
@@ -60,6 +60,8 @@ public class ChooseProduct extends AppCompatActivity implements AdapterView.OnIt
         product_cal = new ArrayList<String>();
 
         product_page = new Intent(this, AddProduct.class);
+        ingredient_amount = new Intent(this, ingredient_amount.class);
+        recived_intent = getIntent();
 
         stuListener = new ValueEventListener() {
             @Override
@@ -141,5 +143,15 @@ public class ChooseProduct extends AppCompatActivity implements AdapterView.OnIt
         }
         ArrayAdapter<String> adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, matching_results_info);
         result.setAdapter(adp);
+    }
+
+    public void Next(View view) {
+        ingredient_amount.putExtra("products_names", product_list);
+        ingredient_amount.putExtra("products_ids", products);
+        ingredient_amount.putExtra("name", recived_intent.getStringExtra("name"));
+        ingredient_amount.putExtra("description", recived_intent.getStringExtra("description"));
+        ingredient_amount.putExtra("kosher", recived_intent.getBooleanExtra("kosher", false));
+        ingredient_amount.putExtra("time", recived_intent.getIntExtra("time", 0));
+        startActivity(ingredient_amount);
     }
 }

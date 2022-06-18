@@ -4,8 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Code/noasApplication/app/src/main/res/layout/activity_add_product.xml" value="0.4121376811594203" />
+        <entry key="..\:/Code/noasApplication/app/src/main/res/layout/activity_add_recipe.xml" value="0.5" />
+        <entry key="..\:/Code/noasApplication/app/src/main/res/layout/activity_add_recipe_instructions.xml" value="0.4904891304347826" />
         <entry key="..\:/Code/noasApplication/app/src/main/res/layout/activity_browse_recipes.xml" value="0.4121376811594203" />
         <entry key="..\:/Code/noasApplication/app/src/main/res/layout/activity_choose_product.xml" value="0.4904891304347826" />
+        <entry key="..\:/Code/noasApplication/app/src/main/res/layout/activity_ingredient_amount.xml" value="0.4904891304347826" />
+        <entry key="..\:/Code/noasApplication/app/src/main/res/layout/activity_personal_page.xml" value="0.4904891304347826" />
+        <entry key="..\:/Code/noasApplication/app/src/main/res/layout/activity_recipe_page.xml" value="0.4904891304347826" />
       </map>
     </option>
   </component>

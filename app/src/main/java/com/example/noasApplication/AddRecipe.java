@@ -1,5 +1,6 @@
 package com.example.noasApplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,13 +23,14 @@ import static com.example.noasApplication.main_screen_activity.current_user;
 
 public class AddRecipe extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    EditText name, description, cal, ingredients, instructions, topping;
+    EditText name, description; // cal, ingredients, instructions, topping;
     Switch kosher;
-    String str_name, str_description, str_cal, str_ingredients, str_instructions, str_topping;
+    String str_name, str_description; // str_cal, str_ingredients, str_instructions, str_topping;
     TextView errors;
     Spinner time_pick;
     String[] time_lst = {"all", "breakfast", "lunch", "dinner"};
     int time_int;
+    Intent choose_products;
 
     ArrayList Recipes;
 
@@ -41,10 +43,6 @@ public class AddRecipe extends AppCompatActivity implements AdapterView.OnItemSe
 
         name = (EditText)findViewById(R.id.name_recipe);
         description = (EditText)findViewById(R.id.description_recipe);
-        cal = (EditText)findViewById(R.id.calories_recipe);
-        ingredients = (EditText)findViewById(R.id.ingredients_recipe);
-        instructions = (EditText)findViewById(R.id.instructions_recipe);
-        topping = (EditText)findViewById(R.id.topping_recipe);
         kosher = (Switch)findViewById(R.id.kosher_recipe);
         errors = (TextView)findViewById(R.id.errors_recipe);
         time_pick = (Spinner) findViewById(R.id.time_pick);
@@ -55,23 +53,8 @@ public class AddRecipe extends AppCompatActivity implements AdapterView.OnItemSe
                 R.layout.support_simple_spinner_dropdown_item,time_lst);
         time_pick.setAdapter(gender_adp);
 
+        choose_products = new Intent(this, ChooseProduct.class);
 
-
-        Recipes = new ArrayList();
-
-        com.example.noasApplication.FBRefs.refRecipes.addListenerForSingleValueEvent(new ValueEventListener() { // לקחת מתכונים
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dS) {
-                Recipes.clear();
-                for(DataSnapshot data : dS.getChildren()) {
-                    Recipes.add("" + data.getKey());
-                }
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
     }
 
     private boolean valid_name(){
@@ -87,58 +70,19 @@ public class AddRecipe extends AppCompatActivity implements AdapterView.OnItemSe
         return true;
     }
 
-    private boolean valid_cal(){
-        str_cal = cal.getText().toString();
-        if (Double.parseDouble(str_cal) > 0){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean valid_ingredients(){
-        str_ingredients = ingredients.getText().toString();
-        if (str_ingredients.length() > 0){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean valid_instructions(){
-        str_instructions = instructions.getText().toString();
-        if (str_instructions.length() > 0){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean valid_topping(){
-        str_topping = topping.getText().toString();
-        return true;
-    }
 
     public void submit_recipe(View view) {
-        String error = "";
-        if (!valid_name()){error += "Name is too short.\n";}
-        if (!valid_description()){error += "\n";}
-        if (!valid_cal()){error += "Invalid number of calories.\n";}
-        if (!valid_ingredients()){error += "must be at least one ingredient.\n";}
-        if (!valid_instructions()){error += "must be at least one instruction.\n";}
-        if (!valid_topping()){error += "\n";}
-        errors.setText(error);
-        if (error == ""){
-            next_key = Recipes.size();
-            String key = String.valueOf(next_key);
-            com.example.noasApplication.FBRefs.refRecipes.child(key).setValue("");
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("name").setValue(str_name);
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("description").setValue(str_description);
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("cal").setValue(str_cal);
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("ingredients").setValue(str_ingredients);
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("instructions").setValue(str_instructions);
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("topping").setValue(str_topping);
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("kosher").setValue(kosher.isChecked());
-            //com.example.noasApplication.FBRefs.refUsers.child(String.valueOf(current_user.getId())).child("recipes").child(key).setValue(" ");
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("time").setValue(time_int);
-            finish();
+        String str_errors = "";
+        if (!valid_name()){str_errors += "Name is too short.\n";}
+        if (!valid_description()){str_errors += "\n";}
+        errors.setText(str_errors);
+        if (str_errors == ""){
+            // next page
+            choose_products.putExtra("name", str_name);
+            choose_products.putExtra("description", str_description);
+            choose_products.putExtra("kosher", kosher.isChecked());
+            choose_products.putExtra("time", time_int);
+            startActivity(choose_products);
         }
     }
 
