@@ -28,7 +28,7 @@
             android:layout_height="0px"
             android:layout_weight="1"
             android:text="Add Product"
-            android:textSize="26" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/name_add_product"

@@ -116,7 +116,7 @@ public class AddProduct extends AppCompatActivity {
             com.example.noasApplication.FBRefs.refRecipes.child(key).child("fats").setValue(Integer.parseInt(str_fats));
             com.example.noasApplication.FBRefs.refRecipes.child(key).child("prot").setValue(Integer.parseInt(str_prot));
             // add product to recipe
-            choose_product.putExtra(key, 0);
+            choose_product.putExtra("n", key);
             setResult(RESULT_OK, choose_product);
             // back
             finish();
