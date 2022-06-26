@@ -35,6 +35,8 @@ public class AddProduct extends AppCompatActivity {
         fats = (EditText)findViewById(R.id.fats_add_product);
         prot = (EditText)findViewById(R.id.prot_add_product);
 
+        errors = (TextView) findViewById(R.id.errors_text) ;
+
         choose_product = getIntent();
 
         products = new ArrayList();
@@ -109,12 +111,12 @@ public class AddProduct extends AppCompatActivity {
         if (error == ""){
             String key = String.valueOf(products.size());
             // add product to fb
-            com.example.noasApplication.FBRefs.refRecipes.child(key).setValue("");
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("name").setValue(str_name);
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("cal").setValue(Integer.parseInt(str_cal));
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("car").setValue(Integer.parseInt(str_car));
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("fats").setValue(Integer.parseInt(str_fats));
-            com.example.noasApplication.FBRefs.refRecipes.child(key).child("prot").setValue(Integer.parseInt(str_prot));
+            FBRefs.refProducts.child(key).setValue("");
+            FBRefs.refProducts.child(key).child("name").setValue(str_name);
+            FBRefs.refProducts.child(key).child("cal").setValue(str_cal);
+            FBRefs.refProducts.child(key).child("car").setValue(str_car);
+            FBRefs.refProducts.child(key).child("fats").setValue(str_fats);
+            FBRefs.refProducts.child(key).child("prot").setValue(str_prot);
             // add product to recipe
             choose_product.putExtra("n", key);
             setResult(RESULT_OK, choose_product);

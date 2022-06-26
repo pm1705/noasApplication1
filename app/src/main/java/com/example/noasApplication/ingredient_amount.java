@@ -23,7 +23,7 @@ public class ingredient_amount extends AppCompatActivity {
     String str_amount, str_errors;
     String[] products;
     int[] products_ids;
-    ArrayList<Double> grams, cals;
+    ArrayList<Integer> grams, cals;
     int index = 0;
     double cal = 0;
 
@@ -46,6 +46,9 @@ public class ingredient_amount extends AppCompatActivity {
         products = recived_intent.getStringArrayExtra("products_names");
         products_ids = recived_intent.getIntArrayExtra("products_ids");
 
+        cals = new ArrayList<>();
+        grams = new ArrayList<>();
+
         stuListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dS) {
@@ -53,7 +56,8 @@ public class ingredient_amount extends AppCompatActivity {
                 cals.clear();
 
                 for(DataSnapshot data : dS.getChildren()) {
-                    cals.add((Double) data.child("cal").getValue());
+                    System.out.println();
+                    cals.add(Integer.parseInt(data.child("cal").getValue().toString()));
                 }
             }
             @Override
@@ -79,8 +83,9 @@ public class ingredient_amount extends AppCompatActivity {
     }
 
     private boolean valid_grams(){
-        str_amount = amount.toString();
-        if (Double.parseDouble(str_amount) > 0){
+        str_amount = amount.getText().toString();
+        System.out.println(str_amount);
+        if (Integer.parseInt(str_amount) > 0){
             return true;
         }
         return false;
@@ -98,7 +103,7 @@ public class ingredient_amount extends AppCompatActivity {
         if (!valid_grams()) str_errors = "Invalid number of grams.\n";
         errors.setText(str_errors);
         if (str_errors == "") {
-            grams.add(Double.parseDouble(str_amount));
+            grams.add(Integer.parseInt(str_amount));
             if (index < products.length) {
                 index++;
                 show();
