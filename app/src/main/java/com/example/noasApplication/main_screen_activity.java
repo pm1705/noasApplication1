@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.BarringInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class main_screen_activity extends AppCompatActivity {
 
     Intent peronal_page_intent, new_recipe_intent, browse_recipes_intent, add_restaurant_intent,
-            back_to_temp, vitamin_table_intent;
+            back_to_temp, vitamin_table_intent, bar_code_intent;
 
     int logged_user_id; // logged_user_id
     String log; //logged_user_id_to_str
@@ -122,7 +123,7 @@ public class main_screen_activity extends AppCompatActivity {
     }
 
     public void new_restaurant(View view) { // רק לאדמינים
-        if (current_user.getName().equals("Admin")){startActivity(add_restaurant_intent);}
+        if (current_user.getEmail().equals("nr8112@bs.amalnet.k12.il") && current_user.getPassword().equals("noa123456")){startActivity(add_restaurant_intent);}
     }
 
     public void log_out(View view) {

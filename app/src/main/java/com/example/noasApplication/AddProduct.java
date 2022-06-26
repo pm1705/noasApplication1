@@ -112,6 +112,7 @@ public class AddProduct extends AppCompatActivity {
             String key = String.valueOf(products.size());
             // add product to fb
             FBRefs.refProducts.child(key).setValue("");
+            System.out.println("----HII");
             FBRefs.refProducts.child(key).child("name").setValue(str_name);
             FBRefs.refProducts.child(key).child("cal").setValue(str_cal);
             FBRefs.refProducts.child(key).child("car").setValue(str_car);
