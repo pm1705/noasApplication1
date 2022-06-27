@@ -26,18 +26,20 @@ import java.util.ArrayList;
 public class main_screen_activity extends AppCompatActivity {
 
     Intent peronal_page_intent, new_recipe_intent, browse_recipes_intent, add_restaurant_intent,
-            back_to_temp, vitamin_table_intent, bar_code_intent;
+            back_to_temp, vitamin_table_intent, bar_code_intent, weights;
 
     int logged_user_id; // logged_user_id
     String log; //logged_user_id_to_str
 
     ArrayList<String> recipes, favorites;
 
-    TextView info_display;
+    TextView info_display, daily_cals;
     public static com.example.noasApplication.User current_user;
 
     ImageView pfpview;
     Uri curImage;
+
+    double cal_goal;
 
 
     SharedPreferences.Editor editor; // זיכרון פנימי
@@ -56,6 +58,12 @@ public class main_screen_activity extends AppCompatActivity {
         info_display = (TextView) findViewById(R.id.userinfo);
 
         pfpview = (ImageView) findViewById(R.id.pfpview);
+
+        daily_cals = (TextView)findViewById(R.id.daily_cals);
+        cal_goal = calc_cal_goal();
+
+        daily_cals.setText("Daily calories counter: " + cal_goal);
+
 
 
         FBRefs.refUsers.addListenerForSingleValueEvent(new ValueEventListener() { // מוציא מידע
@@ -108,6 +116,7 @@ public class main_screen_activity extends AppCompatActivity {
         add_restaurant_intent = new Intent(this, AddRestaruant.class);
         back_to_temp = new Intent(this, temp_screen.class);
         vitamin_table_intent = new Intent(this, VitaminTable.class);
+//        weights = new Intent(this, WeightsTB.class);
     }
 
     public void personal_page(View view) {
@@ -157,7 +166,58 @@ public class main_screen_activity extends AppCompatActivity {
             browse_recipes_intent.putExtra("option", "regular");
             startActivity(browse_recipes_intent);
         }
+//        if (itm.equals("Weights Table")){
+//            startActivity(weights);
+//        }
 
         return true;
+    }
+
+    private double calc_cal_goal(){
+        int gender, age, height, weight, activity_lvl;
+        double BMR = 0;
+        gender = current_user.getGender();
+        age = current_user.getAge();
+        height = current_user.getHeight();
+        weight = current_user.getWeight();
+        activity_lvl = current_user.getActivity_level();
+
+        if (gender == 0) { // male
+            BMR = 66 + 13.8 * weight + 5 * height - 6.8 * age;
+
+        }
+        else if (gender == 1) { // female
+            BMR = 655 + 9.6 * weight + 1.8 * weight - 4.7 * age;
+        }
+
+        switch(activity_lvl) {
+            case 1:
+                BMR *= 1.2;
+                break;
+            case 2:
+                BMR *= 1.375;
+                break;
+            case 3:
+                BMR *= 1.55;
+                break;
+            case 4:
+                BMR *= 1.725;
+                break;
+            case 5:
+                BMR *= 1.9;
+                break;
+        }
+
+        return BMR;
+    }
+
+    public void inc_goal(View view) {
+        cal_goal += 300;
+        daily_cals.setText("Daily calories counter: " + cal_goal);
+    }
+
+    public void dep_goal(View view) {
+        cal_goal -= 300;
+        daily_cals.setText("Daily calories counter: " + cal_goal);
     }
 }

@@ -16,8 +16,8 @@ public class User {
         this.age = age;
         this.activity_level = activity_level;
         this.location = location;
-        //this.recipes = recipes;
-        //this.favorites = favorites;
+        // this.recipes = recipes;
+        // this.favorites = favorites;
     }
 
     public String getName() {

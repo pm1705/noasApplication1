@@ -17,13 +17,46 @@
         android:layout_weight="90"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="5"
-            android:onClick="log_out"
-            android:text="LOG OUT" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:onClick="log_out"
+                android:text="LOG OUT" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="15" />
+
+            <Button
+                android:id="@+id/button24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:onClick="inc_goal"
+                android:text="Inc" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
+
+            <Button
+                android:id="@+id/button25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:onClick="dep_goal"
+                android:text="DEP" />
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -37,6 +70,12 @@
             android:layout_weight="5"
             android:gravity="center"
             android:text="HOME" />
+
+        <TextView
+            android:id="@+id/daily_cals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calories counter: " />
 
         <ImageView
             android:id="@+id/pfpview"
