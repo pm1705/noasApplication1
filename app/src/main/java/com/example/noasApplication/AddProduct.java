@@ -138,10 +138,6 @@ public class AddProduct extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         String itm = item.getTitle().toString();
 
-        if (itm.equals("Account")){
-            Intent peronal_page_intent = new Intent(this, personal_page.class);
-            startActivity(peronal_page_intent);
-        }
         if (itm.equals("Recipes")){
             Intent browse_recipes_intent = new Intent(this, browse_recipes.class);
             browse_recipes_intent.putExtra("option", "regular");
