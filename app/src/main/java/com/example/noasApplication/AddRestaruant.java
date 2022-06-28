@@ -47,6 +47,8 @@ public class AddRestaruant extends AppCompatActivity {
         res_errors = (TextView)findViewById(R.id.res_errors_add_res);
         pro_errors = (TextView)findViewById(R.id.pro_errors_add_res);
 
+        Recipes = new ArrayList<>();
+        Restaurnts = new ArrayList<>();
 
         products = new ArrayList<com.example.noasApplication.Product>();
 
@@ -180,11 +182,12 @@ public class AddRestaruant extends AppCompatActivity {
             refRestaurants.child(key).child("locations").setValue("");
             ArrayList<String> location_list = locations();
             for (int i = 0; i < location_list.size(); i++){
-                refRestaurants.child(key).child("locations").child(location_list.get(i)).setValue("");
+                refRestaurants.child(key).child("locations").child("" + i).setValue(location_list.get(i));
             }
             refRestaurants.child(key).child("products").setValue("");
             for (int i = 0; i < products.size(); i++){
-                refRestaurants.child(key).child("locations").child(products.get(i).getKey()).setValue("");
+                System.out.println(products.get(i).toString());
+                refRestaurants.child(key).child("products").child("" + i).setValue(products.get(i));
             }
             startActivity(main_screen_intent);
 

@@ -159,8 +159,15 @@ public class ChooseProduct extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void Next(View view) {
-        ingredient_amount.putExtra("products_names", product_names);
-        ingredient_amount.putExtra("products_ids", chosen_products_ids);
+        String[] chosen_names_array = new String[chosen_products_names.size()];
+        String[] chosen_ids_array = new String[chosen_products_names.size()];
+        for (int i=0; i<chosen_products_names.size();i++){
+            chosen_names_array[i] = chosen_products_names.get(i);
+            chosen_ids_array[i] = chosen_products_ids.get(i);
+        }
+        System.out.println(chosen_products_names.size());
+        ingredient_amount.putExtra("products_names", chosen_names_array);
+        ingredient_amount.putExtra("products_ids", chosen_ids_array);
         ingredient_amount.putExtra("name", recived_intent.getStringExtra("name"));
         ingredient_amount.putExtra("description", recived_intent.getStringExtra("description"));
         ingredient_amount.putExtra("kosher", recived_intent.getBooleanExtra("kosher", false));

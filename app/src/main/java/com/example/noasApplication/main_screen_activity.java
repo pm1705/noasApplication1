@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,14 +34,17 @@ public class main_screen_activity extends AppCompatActivity {
 
     ArrayList<String> recipes, favorites;
 
-    TextView info_display;
+    TextView info_display, calorie_display;
     public static com.example.noasApplication.User current_user;
 
     ImageView pfpview;
     Uri curImage;
 
+    double calories, og_calories;
 
-    SharedPreferences.Editor editor; // זיכרון פנימי
+    SharedPreferences.Editor editor; //in storage
+
+    AlertDialog.Builder adb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class main_screen_activity extends AppCompatActivity {
         log = Integer.toString(logged_user_id);
 
         info_display = (TextView) findViewById(R.id.userinfo);
+        calorie_display = (TextView) findViewById(R.id.daily_cals);
 
         pfpview = (ImageView) findViewById(R.id.pfpview);
 
@@ -77,6 +82,28 @@ public class main_screen_activity extends AppCompatActivity {
                                 Integer.valueOf(data.child("age").getValue().toString()),
                                 Integer.valueOf(data.child("activityLevel").getValue().toString()),
                                 logged_user_id);
+
+                        if (current_user.getGender() == 0){
+                            calories = 66 + 13.8*current_user.getWeight() + 5*current_user.getHeight() - 6.8*current_user.getAge();
+                        }
+                        else{
+                            calories = 655 + 6.9*current_user.getWeight() + 1.8*current_user.getHeight() - 4.7*current_user.getAge();
+                        }
+
+                        switch (current_user.getActivity_level()){
+                            case 0: calories *= 1.2;
+                                break;
+                            case 1: calories *= 1.375;
+                                break;
+                            case 2: calories *= 1.55;
+                                break;
+                            case 3: calories *= 1.725;
+                                break;
+                            case 4: calories *= 1.9;
+                                break;
+                        }
+                        og_calories = calories;
+                        calorie_display.setText("Daily: " + (int) calories);
 
                         FBRefs.storageRef.child(current_user.getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
@@ -108,9 +135,15 @@ public class main_screen_activity extends AppCompatActivity {
         add_restaurant_intent = new Intent(this, AddRestaruant.class);
         back_to_temp = new Intent(this, temp_screen.class);
         vitamin_table_intent = new Intent(this, VitaminTable.class);
+
+        adb = new AlertDialog.Builder(this);
+        adb.setTitle("Error");
+        adb.setMessage("אי אפשר קלוריות מתחת ל500");
+
     }
 
     public void personal_page(View view) {
+        peronal_page_intent.putExtra("uri", curImage.toString());
         startActivity(peronal_page_intent);
     }
 
@@ -159,5 +192,25 @@ public class main_screen_activity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public void plus(View view) {
+        calories += 300;
+        calorie_display.setText("Daily: " + (int) calories);
+    }
+
+    public void minus(View view) {
+        if (calories > 800){
+            calories -= 300;
+            calorie_display.setText("Daily: " + (int) calories);
+        }
+        else{
+            AlertDialog ad = adb.create();
+            ad.show();
+        }
+    }
+
+    public void reset_cals(View view) {
+        calorie_display.setText("Daily: " + (int) og_calories);
     }
 }

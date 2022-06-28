@@ -30,8 +30,7 @@ public class AddRecipeInstructions extends AppCompatActivity {
     double double_cal;
     int int_time, next_key;
     boolean bool_kosher;
-    String[] ingredients_list;
-    int[] ingredients_ids_list;
+    String[] ingredients_list, ingredients_ids_list;
     double[] grams;
     String str_instructions, str_topping, str_errors;
     Intent recieved_intent, main;
@@ -82,7 +81,7 @@ public class AddRecipeInstructions extends AppCompatActivity {
         bool_kosher = recieved_intent.getBooleanExtra("kosher", false);
         str_description = recieved_intent.getStringExtra("description");
         ingredients_list = recieved_intent.getStringArrayExtra("products_names");
-        ingredients_ids_list = recieved_intent.getIntArrayExtra("products_ids");
+        ingredients_ids_list = recieved_intent.getStringArrayExtra("products_ids");
         grams = recieved_intent.getDoubleArrayExtra("grams");
     }
 

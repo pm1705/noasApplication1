@@ -21,10 +21,9 @@ public class ingredient_amount extends AppCompatActivity {
     TextView name, errors;
     EditText amount;
     String str_amount, str_errors;
-    String[] products;
-    int[] products_ids;
+    String[] products, products_ids;
     ArrayList<Integer> grams, cals;
-    int index = 0;
+    int index;
     double cal = 0;
 
     Intent recipe_conclusion, recived_intent;
@@ -44,7 +43,9 @@ public class ingredient_amount extends AppCompatActivity {
         recived_intent = getIntent();
 
         products = recived_intent.getStringArrayExtra("products_names");
-        products_ids = recived_intent.getIntArrayExtra("products_ids");
+        products_ids = recived_intent.getStringArrayExtra("products_ids");
+
+        index = 0;
 
         cals = new ArrayList<>();
         grams = new ArrayList<>();
@@ -56,7 +57,6 @@ public class ingredient_amount extends AppCompatActivity {
                 cals.clear();
 
                 for(DataSnapshot data : dS.getChildren()) {
-                    System.out.println();
                     cals.add(Integer.parseInt(data.child("cal").getValue().toString()));
                 }
             }
@@ -64,18 +64,19 @@ public class ingredient_amount extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) { }
         };
         refProducts.addValueEventListener(stuListener);
+        show();
     }
 
     private void show(){
         name.setText(products[index]);
-        amount.setText(0);
+        amount.setText("0");
     }
 
     private double calculate_calories(){
         double sum = 0;
         for (int i = 0; i < grams.size(); i++){
             double cal, gram;
-            cal = cals.get(products_ids[i]);
+            cal = cals.get(i);
             gram = grams.get(i);
             sum += cal * (gram/100);
         }
@@ -84,7 +85,6 @@ public class ingredient_amount extends AppCompatActivity {
 
     private boolean valid_grams(){
         str_amount = amount.getText().toString();
-        System.out.println(str_amount);
         if (Integer.parseInt(str_amount) > 0){
             return true;
         }
@@ -104,7 +104,7 @@ public class ingredient_amount extends AppCompatActivity {
         errors.setText(str_errors);
         if (str_errors == "") {
             grams.add(Integer.parseInt(str_amount));
-            if (index < products.length) {
+            if (index < products.length-1) {
                 index++;
                 show();
             }
@@ -116,7 +116,13 @@ public class ingredient_amount extends AppCompatActivity {
                 recipe_conclusion.putExtra("description", recived_intent.getStringExtra("description"));
                 recipe_conclusion.putExtra("products_names", products);
                 recipe_conclusion.putExtra("products_ids", products_ids);
-                recipe_conclusion.putExtra("grams", grams);
+                double[] grams_array = new double[grams.size()];
+
+                for (int i=0; i<grams.size();i++){
+                    grams_array[i] = grams.get(i);
+                }
+
+                recipe_conclusion.putExtra("grams", grams_array);
                 startActivity(recipe_conclusion);
             }
         }

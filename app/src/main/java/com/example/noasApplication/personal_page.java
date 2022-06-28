@@ -1,5 +1,7 @@
 package com.example.noasApplication;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,13 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import static com.example.noasApplication.FBRefs.refUsers;
 import static com.example.noasApplication.main_screen_activity.current_user;
 
-public class    personal_page extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class personal_page extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     EditText uname, email, pass, age, weight, height, location;
     Spinner gender, activity_level;
@@ -32,7 +35,9 @@ public class    personal_page extends AppCompatActivity implements AdapterView.O
     int next_id, int_activity_level, int_gender;
     String[] sex_options = {"Male", "Female", "Other"};
     String[] activity_options = {"1", "2", "3", "4", "5"};
-    //User curUser = new User("JhonDoe", "jhon@doe.gmail", "jhon12345", "Israel", 0, 123, 324, 54, 3);
+    ImageView pfpimg;
+    Uri selectedImageUri;
+    Intent recieved_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +55,12 @@ public class    personal_page extends AppCompatActivity implements AdapterView.O
         location = (EditText)findViewById(R.id.location_register);
         errors = (TextView)findViewById(R.id.error);
 
-        avatar = (ImageView)findViewById(R.id.profile_image);
+        pfpimg = (ImageView) findViewById(R.id.profile_image);
+        recieved_intent = getIntent();
+        selectedImageUri = Uri.parse(recieved_intent.getStringExtra("uri"));
+        if (null != selectedImageUri) {
+            Picasso.get().load(selectedImageUri.toString()).into(pfpimg);
+        }
 
         uname.setText(current_user.getName());
         email.setText(current_user.getEmail());
@@ -179,6 +189,10 @@ public class    personal_page extends AppCompatActivity implements AdapterView.O
             refUsers.child(Integer.toString(current_user.getId())).child("gender").setValue(int_gender);
             refUsers.child(Integer.toString(current_user.getId())).child("activityLevel").setValue(int_activity_level);
             refUsers.child(Integer.toString(current_user.getId())).child("location").setValue(str_location);
+            if (null != selectedImageUri) {
+                FBRefs.storageRef.child(str_email).putFile(selectedImageUri);
+            }
+
         }
     }
 
@@ -194,6 +208,36 @@ public class    personal_page extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    public void upload_img(View view) {
+        // create an instance of the
+        // intent of the type image
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        // pass the constant to compare it
+        // with the returned requestCode
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), 200);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            // compare the resultCode with the
+            // SELECT_PICTURE constant
+            if (requestCode == 200) {
+                // Get the url of the image from data
+                selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    // update the preview image in the layout
+                    pfpimg.setImageURI(selectedImageUri);
+                }
+            }
+        }
     }
 
 }
