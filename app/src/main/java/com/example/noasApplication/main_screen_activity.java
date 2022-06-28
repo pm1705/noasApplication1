@@ -8,6 +8,7 @@ import android.telephony.BarringInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +47,8 @@ public class main_screen_activity extends AppCompatActivity {
 
     AlertDialog.Builder adb;
 
+    Button restaurant_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class main_screen_activity extends AppCompatActivity {
         calorie_display = (TextView) findViewById(R.id.daily_cals);
 
         pfpview = (ImageView) findViewById(R.id.pfpview);
-
+        restaurant_button = (Button) findViewById(R.id.restaurant_button);
 
         FBRefs.refUsers.addListenerForSingleValueEvent(new ValueEventListener() { // מוציא מידע
             @Override
@@ -105,6 +108,13 @@ public class main_screen_activity extends AppCompatActivity {
                         og_calories = calories;
                         calorie_display.setText("Daily: " + (int) calories);
 
+                        restaurant_button.setVisibility(View.INVISIBLE);
+
+                        if (current_user.getEmail().equals("nr8112@bs.amalnet.k12.il") && current_user.getPassword().equals("noa123456"))
+                        {
+                            restaurant_button.setVisibility(View.VISIBLE);
+                        }
+
                         FBRefs.storageRef.child(current_user.getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
@@ -139,12 +149,17 @@ public class main_screen_activity extends AppCompatActivity {
         adb = new AlertDialog.Builder(this);
         adb.setTitle("Error");
         adb.setMessage("אי אפשר קלוריות מתחת ל500");
-
     }
 
     public void personal_page(View view) {
-        peronal_page_intent.putExtra("uri", curImage.toString());
-        startActivity(peronal_page_intent);
+        if (curImage == null) {
+            peronal_page_intent.putExtra("uri", "");
+            startActivity(peronal_page_intent);
+        }
+        else {
+            peronal_page_intent.putExtra("uri", curImage.toString());
+            startActivity(peronal_page_intent);
+        }
     }
 
     public void vitamin_table_button(View view) {

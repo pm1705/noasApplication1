@@ -3,6 +3,8 @@ package com.example.noasApplication;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -58,8 +60,12 @@ public class personal_page extends AppCompatActivity implements AdapterView.OnIt
         pfpimg = (ImageView) findViewById(R.id.profile_image);
         recieved_intent = getIntent();
         selectedImageUri = Uri.parse(recieved_intent.getStringExtra("uri"));
-        if (null != selectedImageUri) {
-            Picasso.get().load(selectedImageUri.toString()).into(pfpimg);
+        if (null != selectedImageUri && selectedImageUri.toString() != "") {
+            try {
+                Picasso.get().load(selectedImageUri.toString()).into(pfpimg);
+            }
+            catch (Exception e){
+            }
         }
 
         uname.setText(current_user.getName());
@@ -238,6 +244,24 @@ public class personal_page extends AppCompatActivity implements AdapterView.OnIt
                 }
             }
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        String itm = item.getTitle().toString();
+
+        if (itm.equals("Recipes")){
+            Intent browse_recipes_intent = new Intent(this, browse_recipes.class);
+            browse_recipes_intent.putExtra("option", "regular");
+            startActivity(browse_recipes_intent);
+        }
+
+        return true;
     }
 
 }

@@ -2,6 +2,8 @@ package com.example.noasApplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -52,11 +54,11 @@ public class RecipePage extends AppCompatActivity {
                     }
                 }
 
-                name.setText(str_name + "(" + str_cal + "):");
-                description.setText(str_description);
-                ingredients.setText(str_ingredients);
-                instructions.setText(str_instructions);
-                topping.setText(str_topping);
+                name.setText("Name: " + str_name + "(" + str_cal + "):");
+                description.setText("Description: " + str_description);
+                ingredients.setText("Ingredients: " + str_ingredients);
+                instructions.setText("Instructions: " + str_instructions);
+                topping.setText("Topping: " + str_topping);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) { }
@@ -66,9 +68,25 @@ public class RecipePage extends AppCompatActivity {
 
     }
 
-
-
     public void back(View view) {
         finish();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        String itm = item.getTitle().toString();
+
+        if (itm.equals("Recipes")){
+            Intent browse_recipes_intent = new Intent(this, browse_recipes.class);
+            browse_recipes_intent.putExtra("option", "regular");
+            startActivity(browse_recipes_intent);
+        }
+
+        return true;
     }
 }

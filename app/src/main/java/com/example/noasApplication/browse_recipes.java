@@ -1,8 +1,9 @@
 package com.example.noasApplication;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,15 +12,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,8 +45,6 @@ public class browse_recipes extends AppCompatActivity implements AdapterView.OnI
     String[] time_lst = {"All", "Breakfast", "Lunch", "Dinner"};
     int time_int;
 
-    String[] image_links;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +62,6 @@ public class browse_recipes extends AppCompatActivity implements AdapterView.OnI
         time.setAdapter(gender_adp);
 
         results.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
         results.setOnItemClickListener(this);
 
         search_text = search_input.getText().toString();
@@ -85,7 +79,6 @@ public class browse_recipes extends AppCompatActivity implements AdapterView.OnI
         recipes_time = new ArrayList<Integer>();
         recipes_kosher = new ArrayList<Boolean>();
         recipes_cal = new ArrayList<String>();
-
 
         stuListener = new ValueEventListener() {
             @Override
@@ -124,6 +117,8 @@ public class browse_recipes extends AppCompatActivity implements AdapterView.OnI
 
         search_text = search_input.getText().toString();
 
+        System.out.println("-------" + recipes_ids.size());
+
         for (int i = 0; i< recipes_ids.size(); i++){
 
             current_id = recipes_ids.get(i);
@@ -137,30 +132,12 @@ public class browse_recipes extends AppCompatActivity implements AdapterView.OnI
                         (current_time == time_int || time_int == 0) ) {
                     matching_results.add(current_id);
                     matching_results_info.add(current_name + ", " + current_description + " (" + recipes_cal.get(i) + ")");
-
-                    int finalI = i;
-                    image_links = new String[recipes_ids.size()];
-                    FBRefs.storageRef.child("recipe_images").child((Integer.toString(i))).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            image_links[finalI] = uri.toString();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            image_links[finalI] = "exit";
-                        }
-                    });
                 }
             }
         }
 
-        image_links = new String[]{"https://firebasestorage.googleapis.com/v0/b/myfinalproj-6e9bf.appspot.com/o/a%40a9?alt=media&token=310eca64-a17b-47e1-84bc-02b148e56321",
-                "https://firebasestorage.googleapis.com/v0/b/myfinalproj-6e9bf.appspot.com/o/a%40a9?alt=media&token=310eca64-a17b-47e1-84bc-02b148e56321",
-                "https://firebasestorage.googleapis.com/v0/b/myfinalproj-6e9bf.appspot.com/o/a%40a9?alt=media&token=310eca64-a17b-47e1-84bc-02b148e56321"};
-        customAdapter customadp = new customAdapter(getApplicationContext(),
-                matching_results_info, image_links);
-        results.setAdapter(customadp);
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, matching_results_info);
+        results.setAdapter(adp);
     }
 
     @Override
@@ -185,5 +162,23 @@ public class browse_recipes extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        String itm = item.getTitle().toString();
+
+        if (itm.equals("Recipes")){
+            Intent browse_recipes_intent = new Intent(this, browse_recipes.class);
+            browse_recipes_intent.putExtra("option", "regular");
+            startActivity(browse_recipes_intent);
+        }
+
+        return true;
     }
 }

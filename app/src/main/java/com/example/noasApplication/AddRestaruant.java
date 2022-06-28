@@ -2,6 +2,8 @@ package com.example.noasApplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -158,8 +160,12 @@ public class AddRestaruant extends AppCompatActivity {
             refRecipes.child(key).setValue("");
             refRecipes.child(key).child("name").setValue(str_pro_name);
             refRecipes.child(key).child("description").setValue(str_pro_description);
-            refRecipes.child(key).child("calories").setValue(Integer.parseInt(str_pro_calories));
+            refRecipes.child(key).child("cal").setValue(Integer.parseInt(str_pro_calories));
             refRecipes.child(key).child("kosher").setValue(kosher.isChecked());
+            refRecipes.child(key).child("time").setValue(0);
+            refRecipes.child(key).child("instructions").setValue("none");
+            refRecipes.child(key).child("ingredients").setValue("none");
+            refRecipes.child(key).child("topping").setValue("none");
             // clean fields
             pro_name.setText("");
             pro_description.setText("");
@@ -192,5 +198,23 @@ public class AddRestaruant extends AppCompatActivity {
             startActivity(main_screen_intent);
 
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        String itm = item.getTitle().toString();
+
+        if (itm.equals("Recipes")){
+            Intent browse_recipes_intent = new Intent(this, browse_recipes.class);
+            browse_recipes_intent.putExtra("option", "regular");
+            startActivity(browse_recipes_intent);
+        }
+
+        return true;
     }
 }
